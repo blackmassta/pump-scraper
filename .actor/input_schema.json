@@ -8,7 +8,8 @@
             "type": "string",
             "description": "Search filter term (can be 'mint' or 'symbol')",
             "editor": "textfield",
-            "prefill": "",
+            "nullable": true,
+            "prefill": "(e.g. 'FAFO' or '6N2yWK4FpeH73G19WToroTocyGPNSKcFuBdQD51skkFQ')",
             "sectionCaption": "Filters",
             "sectionDescription": "Filter based on item property"
         },
