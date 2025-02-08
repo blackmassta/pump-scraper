@@ -101,8 +101,8 @@
             "default": 1000,
             "prefill": 1000
         },
-        "sort": {
-            "title": "Sort by",
+        "order_by": {
+            "title": "Order by",
             "type": "string",
             "description": "The field to sort by",
             "editor": "select",
@@ -111,8 +111,8 @@
             "default": "created_timestamp",
             "prefill": "created_timestamp"
         },
-        "order_by": {
-            "title": "Order by",
+        "order_by_direction": {
+            "title": "Order by direction",
             "type": "string",
             "description": "The field to sort by",
             "editor": "select",
@@ -122,5 +122,5 @@
             "prefill": "DESC"
         }
     },
-    "required": ["limit", "offset", "sort", "order_by"]
+    "required": ["limit", "offset", "order_by", "order_by_direction"]
 }
