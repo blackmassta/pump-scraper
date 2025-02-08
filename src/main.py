@@ -71,6 +71,10 @@ async def build_filters(exclude_fields: List[str] = None):
             operator = OperatorEnum.LTE
         elif key.startswith("has_"):
             operator = OperatorEnum.NOT_NULL
+            value = None if value == "both" else bool(value)
+        elif key.startswith("is_"):
+            operator = OperatorEnum.EQ
+            value = None if value == "both" else bool(value)
         else:
             operator = OperatorEnum.EQ
 
