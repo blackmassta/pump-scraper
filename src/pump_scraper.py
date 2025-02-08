@@ -2,13 +2,13 @@ from datetime import datetime
 from logging import Logger
 from typing import List, Union
 
-from api.gecko_terminal import GeckoTerminal
-from api.pump import PumpApi
+from src.api.gecko_terminal import GeckoTerminal
+from src.api.pump import PumpApi
 from src.models.instruments.pool import Pool, TokenPool
 from src.models.instruments.pump_token import PumpToken
 from src.models.integration.api import ApiError
 from src.utils.scripts import retry
-from utils.api import format_response, exception_handler
+from src.utils.api import format_response, exception_handler
 
 
 class PumpScraperToken(PumpToken, TokenPool):
