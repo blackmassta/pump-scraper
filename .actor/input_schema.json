@@ -5,7 +5,7 @@
     "properties": {
         "filter": {
             "title": "Search term",
-            "type": "integer",
+            "type": "string",
             "description": "Search filter term (can be 'mint' or 'symbol')",
             "editor": "textfield",
             "prefill": "",
@@ -84,7 +84,7 @@
             "minimum": 0,
             "maximum": 1000,
             "unit": "items",
-            "prefill": "0",
+            "prefill": 0,
             "sectionCaption": "Pagination",
             "sectionDescription": "Control how many items to show"
         },
@@ -96,7 +96,7 @@
             "minimum": 50,
             "maximum": 1000,
             "unit": "items",
-            "prefill": "1000"
+            "prefill": 1000
         }
     },
     "required": ["limit", "offset"]
