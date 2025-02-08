@@ -1,0 +1,101 @@
+{
+    "title": "Scrape data from a web page",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "filter": {
+            "title": "Search term",
+            "type": "integer",
+            "description": "Search filter term (can be 'mint' or 'symbol')",
+            "editor": "textfield",
+            "prefill": "",
+            "groupCaption": "Filters",
+            "groupDescription": "Filter based on item property"
+        },
+        "created_timestamp": {
+            "title": "Created date",
+            "type": "string",
+            "description": "Created date relative format: {number} {unit}",
+            "editor": "datepicker",
+            "dateType": "relative",
+            "pattern": "^(\\d+)\\s*(hour|minute|second)s?$"
+        },
+        "last_trade_timestamp": {
+            "title": "Last traded date",
+            "type": "string",
+            "description": "Last traded date relative format: {number} {unit}",
+            "editor": "datepicker",
+            "dateType": "relative",
+            "pattern": "^(\\d+)\\s*(day|hour|minute|second)s?$"
+        },
+        "is_graduated": {
+            "title": "Is Graduated",
+            "type": "boolean",
+            "description": "Indicates only completed or graduated coins should be scraped (only graduated coins have an associated raydium pool)",
+            "editor": "checkbox",
+            "nullable": true
+        },
+        "is_nsfw": {
+            "title": "Is NSFW",
+            "type": "boolean",
+            "description": "Show items that are NSFW",
+            "editor": "checkbox",
+            "nullable": true
+        },
+        "has_king_of_the_hill": {
+            "title": "Has King Of the Hill Status",
+            "type": "boolean",
+            "description": "Filters items that have been King of the Hill before",
+            "editor": "checkbox",
+            "nullable": true
+        },
+        "is_mkt_cap_usd": {
+            "title": "Use USD Market Cap",
+            "type": "boolean",
+            "description": "Filter market cap using USD value",
+            "editor": "checkbox",
+            "default": false,
+            "sectionCaption": "Market Cap Filters",
+            "sectionDescription": "Filter based on Market Cap values"
+        },
+        "min_mkt_cap": {
+            "title": "Max Market Cap",
+            "type": "integer",
+            "description": "The maximum market cap to scrape",
+            "editor": "textfield",
+            "minimum": 0,
+            "nullable": true
+        },
+        "max_mkt_cap": {
+            "title": "Min Market Cap",
+            "type": "integer",
+            "description": "The minimum market cap to scrape",
+            "editor": "textfield",
+            "minimum": 0,
+            "nullable": true
+        },
+        "offset": {
+            "title": "Skip count",
+            "type": "integer",
+            "description": "The number of coins to to skip from the start",
+            "editor": "textfield",
+            "minimum": 0,
+            "maximum": 1000,
+            "unit": "items",
+            "prefill": "0",
+            "sectionCaption": "Pagination",
+            "sectionDescription": "Control how many items to show"
+        },
+        "limit": {
+            "title": "Max count",
+            "type": "integer",
+            "description": "The max number of coins to scrape",
+            "editor": "textfield",
+            "minimum": 50,
+            "maximum": 1000,
+            "unit": "items",
+            "prefill": "1000"
+        }
+    },
+    "required": ["limit", "offset"]
+}
