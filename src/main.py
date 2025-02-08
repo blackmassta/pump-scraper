@@ -36,9 +36,9 @@ async def build_params():
     for k, v in args.items():
         if k in transform:
             if transform[k] is not None:
-                params[transform[k]] = v
+                params[transform[k]] = str(v).lower() if isinstance(v, bool) else v
             else:
-                params[k] = v
+                params[k] = str(v).lower() if isinstance(v, bool) else v
 
     return params
 
@@ -111,4 +111,4 @@ async def main() -> None:
             # Save the extracted headings to the dataset, which is a table-like storage.
             await Actor.push_data(filtered)
         else:
-            return Actor.push_data(format_response(results))
+            await Actor.push_data(format_response(results))
