@@ -19,7 +19,7 @@ class PumpScraper:
     def __init__(self, logger: Logger):
         self.logger = logger.getChild(__name__)
         self.pump_api = PumpApi(logger=logger)
-        self.pool_api = GeckoTerminal()
+        self.pool_api = GeckoTerminal(logger=logger)
         self.pump_args = {"offset", "limit", "sort", "order", "includeNsfw"}
 
     @exception_handler
