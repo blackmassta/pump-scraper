@@ -100,7 +100,7 @@ async def main() -> None:
         client = PumpScraper(logger=Actor.log)
         # Retrieve the input object for the Actor. The structure of input is defined in input_schema.json.
         params = await build_params()
-        conditions = await build_filters(exclude_fields=client.pump_args, skip_false_fields="")
+        conditions = await build_filters(exclude_fields=client.pump_args)
         # Fetch the HTML content of the page, following redirects if necessary.
         Actor.log.info(f'Sending a request with params {params}')
         results = await client.get_results(**params)
