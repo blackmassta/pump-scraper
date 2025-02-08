@@ -9,8 +9,8 @@
             "description": "Search filter term (can be 'mint' or 'symbol')",
             "editor": "textfield",
             "prefill": "",
-            "groupCaption": "Filters",
-            "groupDescription": "Filter based on item property"
+            "sectionCaption": "Filters",
+            "sectionDescription": "Filter based on item property"
         },
         "created_timestamp": {
             "title": "Created date",
@@ -33,7 +33,9 @@
             "type": "boolean",
             "description": "Indicates only completed or graduated coins should be scraped (only graduated coins have an associated raydium pool)",
             "editor": "checkbox",
-            "nullable": true
+            "nullable": true,
+            "sectionCaption": "Flags",
+            "sectionDescription": "Flags based on item property"
         },
         "is_nsfw": {
             "title": "Is NSFW",
