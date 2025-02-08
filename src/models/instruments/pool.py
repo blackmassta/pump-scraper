@@ -75,15 +75,15 @@ class Attributes(ApiModel):
     historical_data: Dict[str, HistoricalDataEntry]
     locked_liquidity: Optional[float] = None
     security_indicators: List = []
-    gt_score: float
-    gt_score_details: GTScoreDetails
-    pool_reports_count: int
+    gt_score: Optional[float] = None
+    gt_score_details: Optional[GTScoreDetails] = None
+    pool_reports_count: Optional[int]
     pool_created_at: datetime
     latest_swap_timestamp: datetime
     high_low_price_data_by_token_id: Dict[str, HighLowPriceData]
-    is_nsfw: bool
+    is_nsfw: Optional[bool] = None
     is_stale_pool: Optional[bool] = None
-    is_pool_address_explorable: bool
+    is_pool_address_explorable: Optional[bool] = None
 
     def price_percent_change_value(self):
         return convert_percentage(self.price_percent_change)
@@ -117,7 +117,7 @@ class TokenPool:
 
 class Pool(ApiModel):
     data: PoolData
-    included: Optional[List[Union[PoolTransactionData]]]
+    included: Optional[List[Union[PoolTransactionData]]] = None
 
     def get_token_pool(self) -> TokenPool:
         attr = self.data.attributes

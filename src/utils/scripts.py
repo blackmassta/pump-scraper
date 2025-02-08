@@ -80,9 +80,7 @@ def random_between(a: int, b: int) -> int:
 
 def stagger(a: int, b: int):
     wait = random_between(a, b)
-    print(f"Staggering for {wait} seconds...")
     time.sleep(wait)
-    print(f"Staggering for {wait} seconds...[done]")
 
 
 def exception_swallow(func):

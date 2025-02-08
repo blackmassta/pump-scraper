@@ -84,6 +84,7 @@
             "minimum": 0,
             "maximum": 1000,
             "unit": "items",
+            "default": 0,
             "prefill": 0,
             "sectionCaption": "Pagination",
             "sectionDescription": "Control how many items to show"
@@ -96,8 +97,29 @@
             "minimum": 50,
             "maximum": 1000,
             "unit": "items",
+            "default": 1000,
             "prefill": 1000
+        },
+        "sort": {
+            "title": "Sort by",
+            "type": "string",
+            "description": "The field to sort by",
+            "editor": "select",
+            "enum": ["created_timestamp", "last_trade_timestamp", "last_reply", "market_cap"],
+            "enumTitles": ["Created time", "Last trade time", "Last reply time", "market_cap"],
+            "default": "created_timestamp",
+            "prefill": "created_timestamp"
+        },
+        "order_by": {
+            "title": "Order by",
+            "type": "string",
+            "description": "The field to sort by",
+            "editor": "select",
+            "enum": ["DESC", "ASC"],
+            "enumTitles": ["Descending", "Ascending"],
+            "default": "DESC",
+            "prefill": "DESC"
         }
     },
-    "required": ["limit", "offset"]
+    "required": ["limit", "offset", "sort", "order_by"]
 }

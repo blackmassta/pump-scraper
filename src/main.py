@@ -1,41 +1,58 @@
 # Apify SDK - A toolkit for building Apify Actors. Read more at:
 # https://docs.apify.com/sdk/python
+import json
+from typing import List
+
 from apify import Actor
 
 from src.pump_scraper import PumpScraper
+from src.utils.api import format_response
 from src.utils.condition import Condition, OperatorEnum, ConditionConstant
 
 
-async def build_params():
-    params = {}
+def get_transforms(is_mkt_cap_usd: bool = False):
     transforms = {
         "filter": "term",
         "offset": None,
         "limit": None,
         "sort": None,
         "order_by": "order",
-        "is_nsfw": "includeNsfw"
+        "is_nsfw": "includeNsfw",
+        "is_graduated": "complete",
+        "has_king_of_the_hill": "king_of_the_hill_timestamp",
+        "min_mkt_cap": "market_cap_usd" if is_mkt_cap_usd else "market_cap",
+        "max_mkt_cap": "market_cap_usd" if is_mkt_cap_usd else "market_cap"
     }
 
+    return transforms
+
+
+async def build_params():
+    params = {}
+    transform = get_transforms()
     args = await Actor.get_input() or {}
     for k, v in args.items():
-        if k in transforms:
-            if v is not None:
-                params[transforms[k]] = v
+        if k in transform:
+            if transform[k] is not None:
+                params[transform[k]] = v
             else:
                 params[k] = v
 
     return params
 
 
-async def build_filters():
+async def build_filters(exclude_fields: List[str] = None):
     args = await Actor.get_input() or {}
-    transform = {
-        "is_graduated": "complete",
-        "has_king_of_the_hill": "king_of_the_hill_timestamp",
-        "min_mkt_cap": "market_cap_usd" if args.get("is_mkt_cap_usd") else "market_cap",
-        "max_mkt_cap": "market_cap_usd" if args.get("is_mkt_cap_usd") else "market_cap"
-    }
+    is_mkt_cap_usd = args.pop('is_mkt_cap_usd')
+    transform = get_transforms(is_mkt_cap_usd=is_mkt_cap_usd)
+
+    if exclude_fields:
+        reverse_transform = {v if v else k: k for k, v in transform.items()}
+        for field in exclude_fields:
+            field_name = reverse_transform.get(field) or field
+            Actor.log.debug(f"Removing excluded fields {field_name} from {args}")
+            if field_name in args:
+                args.pop(field_name)
 
     conditions = ConditionConstant(is_true=True)
     for key, value in args.items():
@@ -70,13 +87,18 @@ async def main() -> None:
     the field of web scraping significantly.
     """
     async with Actor:
+        client = PumpScraper(logger=Actor.log)
         # Retrieve the input object for the Actor. The structure of input is defined in input_schema.json.
         params = await build_params()
-        conditions = await build_filters()
-        client = PumpScraper(logger=Actor.log)
+        conditions = await build_filters(client.pump_args)
         # Fetch the HTML content of the page, following redirects if necessary.
         Actor.log.info(f'Sending a request with params {params}')
         results = await client.get_results(**params)
-        filtered = filter(conditions.evaluate, results)
-        # Save the extracted headings to the dataset, which is a table-like storage.
-        await Actor.push_data(filtered)
+        if results:
+            Actor.log.debug(f"Filtering results by: {conditions.to_sql(results[0])}")
+            filtered = format_response(filter(conditions.evaluate, results))
+            Actor.log.debug(f"Filtered results {filtered}")
+            # Save the extracted headings to the dataset, which is a table-like storage.
+            await Actor.push_data(filtered)
+        else:
+            return Actor.push_data(format_response(results))

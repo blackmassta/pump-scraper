@@ -1,4 +1,5 @@
 from functools import wraps
+from typing import Iterator
 
 from src.models.integration.api import ApiError
 from src.utils.scripts import is_primitive
@@ -26,6 +27,12 @@ def format_response(value):
             'data': value
         }
     elif isinstance(value, list):
+        return {
+            'count': len(value),
+            'data': value
+        }
+    elif isinstance(value, Iterator):
+        value = list(value)
         return {
             'count': len(value),
             'data': value

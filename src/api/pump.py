@@ -96,8 +96,7 @@ class PumpApi(BaseApi):
 
             # save results and stagger
             coins.extend(filtered)
-            self.logger.info(f"{len(coins)} total, last={len(filtered)}, unfiltered={len(result)}, last={result[-1].created_timestamp if result else None}")
-            stagger(1, 3)
+            self.logger.debug(f"{len(coins)} total, last={len(filtered)}, unfiltered={len(result)}, last={result[-1].created_timestamp if result else None}")
 
         return coins
 

@@ -1,18 +1,22 @@
+from dataclasses import asdict
 from datetime import datetime
 from logging import Logger
-from typing import List, Union
+from typing import List, Union, Optional
+
+from pydantic import Field
 
 from src.api.gecko_terminal import GeckoTerminal
 from src.api.pump import PumpApi
 from src.models.instruments.pool import Pool, TokenPool
 from src.models.instruments.pump_token import PumpToken
 from src.models.integration.api import ApiError
-from src.utils.scripts import retry
-from src.utils.api import format_response, exception_handler
+from src.utils.scripts import retry, hours_ago
+from src.utils.api import exception_handler
 
 
-class PumpScraperToken(PumpToken, TokenPool):
-    scraped_date: datetime
+class PumpScraperToken(PumpToken):
+    pool: Optional[TokenPool] = None
+    scraped_date: datetime = Field(alias="scraped_date", default_factory=lambda: hours_ago(0))
 
 
 class PumpScraper:
@@ -20,7 +24,7 @@ class PumpScraper:
         self.logger = logger.getChild(__name__)
         self.pump_api = PumpApi(logger=logger)
         self.pool_api = GeckoTerminal(logger=logger)
-        self.pump_args = {"offset", "limit", "sort", "order", "includeNsfw"}
+        self.pump_args = {"term", "offset", "limit", "sort", "order", "includeNsfw"}
 
     @exception_handler
     async def get_results(self, **kwargs) -> List[PumpScraperToken]:
@@ -39,7 +43,7 @@ class PumpScraper:
                 pool = await self.get_pool(coin.raydium_pool)
                 if pool:
                     pool_data = pool.get_token_pool()
-                    results.append(PumpScraperToken(**coin.model_dump(), **pool_data.model_dump()))
+                    results.append(PumpScraperToken(**coin.model_dump(), pool=pool_data))
                     self.logger.debug(f"Processing: {coin.symbol} ({coin.mint})...[done]")
                 else:
                     results.append(PumpScraperToken(**coin.model_dump()))
@@ -50,7 +54,7 @@ class PumpScraper:
 
         return results
 
-    @retry(BaseException, tries=3, delay=2, backoff=2)
+    @retry(Exception, tries=3, delay=2, backoff=2)
     async def get_coins(
             self,
             term: str = None,
@@ -63,6 +67,6 @@ class PumpScraper:
         else:
             return await self.pump_api.get_tokens(offset=offset, limit=limit, **kwargs)
 
-    @retry(BaseException, tries=3, delay=2, backoff=2)
-    def get_pool(self, pool_id: str) -> Union[List[Pool], ApiError]:
-        return format_response(self.pool_api.get_pool(pool_id=pool_id))
+    @retry(Exception, tries=3, delay=2, backoff=2)
+    async def get_pool(self, pool_id: str) -> Union[List[Pool], ApiError]:
+        return await self.pool_api.get_pool(pool_id=pool_id)
