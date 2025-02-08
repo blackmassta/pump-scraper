@@ -106,9 +106,9 @@ async def main() -> None:
         results = await client.get_results(**params)
         if results:
             Actor.log.debug(f"Filtering results by: {conditions.to_sql(results[0])}")
-            filtered = format_response(filter(conditions.evaluate, results))
+            filtered = list(filter(conditions.evaluate, results))
             Actor.log.debug(f"Filtered results {filtered}")
             # Save the extracted headings to the dataset, which is a table-like storage.
             await Actor.push_data(filtered)
         else:
-            await Actor.push_data(format_response(results))
+            await Actor.push_data(results)

@@ -25,6 +25,9 @@ RUN echo "Python version:" \
 # for most source file changes.
 COPY . ./
 
+# Install playwright
+RUN playwright install
+
 # Use compileall to ensure the runnability of the Actor Python code.
 RUN python3 -m compileall -q .
 
