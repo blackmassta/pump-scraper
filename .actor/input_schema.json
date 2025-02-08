@@ -9,7 +9,7 @@
             "description": "Search filter term (can be 'mint' or 'symbol')",
             "editor": "textfield",
             "nullable": true,
-            "prefill": "(e.g. 'FAFO' or '6N2yWK4FpeH73G19WToroTocyGPNSKcFuBdQD51skkFQ')",
+            "example": "(e.g. 'FAFO' or '6N2yWK4FpeH73G19WToroTocyGPNSKcFuBdQD51skkFQ')",
             "sectionCaption": "Filters",
             "sectionDescription": "Filter based on item property"
         },
@@ -107,7 +107,7 @@
             "description": "The field to sort by",
             "editor": "select",
             "enum": ["created_timestamp", "last_trade_timestamp", "last_reply", "market_cap"],
-            "enumTitles": ["Created time", "Last trade time", "Last reply time", "market_cap"],
+            "enumTitles": ["Created time", "Last trade time", "Last reply time", "Market Cap"],
             "default": "created_timestamp",
             "prefill": "created_timestamp"
         },
