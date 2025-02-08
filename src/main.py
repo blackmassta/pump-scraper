@@ -12,12 +12,14 @@ from src.utils.condition import Condition, OperatorEnum, ConditionConstant
 
 def get_transforms(is_mkt_cap_usd: bool = False):
     transforms = {
+        # supported by api
         "filter": "term",
         "offset": None,
         "limit": None,
         "order_by": "sort",
         "order_by_direction": "order",
         "is_nsfw": "includeNsfw",
+        # applied with conditions
         "is_graduated": "complete",
         "has_king_of_the_hill": "king_of_the_hill_timestamp",
         "min_mkt_cap": "market_cap_usd" if is_mkt_cap_usd else "market_cap",
@@ -78,7 +80,11 @@ async def build_filters(exclude_fields: List[str] = None):
         else:
             operator = OperatorEnum.EQ
 
-        conditions = conditions & Condition(field, operator, value)
+        if isinstance(value, bool) and value is False:
+            Actor.log.debug(f"Skipping {field} filter")
+            continue
+        else:
+            conditions = conditions & Condition(field, operator, value)
 
     return conditions
 
@@ -94,7 +100,7 @@ async def main() -> None:
         client = PumpScraper(logger=Actor.log)
         # Retrieve the input object for the Actor. The structure of input is defined in input_schema.json.
         params = await build_params()
-        conditions = await build_filters(client.pump_args)
+        conditions = await build_filters(exclude_fields=client.pump_args, skip_false_fields="")
         # Fetch the HTML content of the page, following redirects if necessary.
         Actor.log.info(f'Sending a request with params {params}')
         results = await client.get_results(**params)

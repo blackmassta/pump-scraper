@@ -31,29 +31,28 @@
         },
         "is_graduated": {
             "title": "Is Graduated",
-            "type": "string",
+            "type": "boolean",
             "description": "Indicates only completed or graduated coins should be scraped (only graduated coins have an associated raydium pool)",
-            "editor": "select",
-            "enum": ["both", "true", "false"],
-            "enumTitles": ["Both", "Yes", "No"],
+            "editor": "checkbox",
+            "default": false,
+            "nullable": true,
             "sectionCaption": "Flags",
             "sectionDescription": "Flags based on item property"
         },
         "is_nsfw": {
             "title": "Is NSFW",
-            "type": "string",
+            "type": "boolean",
             "description": "Show items that are NSFW",
-            "editor": "select",
-            "enum": ["both", "true", "false"],
-            "enumTitles": ["Both", "Yes", "No"]
+            "editor": "checkbox",
+            "default": true
         },
         "has_king_of_the_hill": {
             "title": "Has King Of the Hill Status",
-            "type": "string",
+            "type": "boolean",
             "description": "Filters items that have been King of the Hill before",
-            "editor": "select",
-            "enum": ["both", "true", "false"],
-            "enumTitles": ["Both", "Yes", "No"]
+            "editor": "checkbox",
+            "default": false,
+            "nullable": true
         },
         "is_mkt_cap_usd": {
             "title": "Use USD Market Cap",
