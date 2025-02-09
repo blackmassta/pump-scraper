@@ -85,8 +85,12 @@ class Attributes(ApiModel):
     is_stale_pool: Optional[bool] = None
     is_pool_address_explorable: Optional[bool] = None
 
+    @property
     def price_percent_change_value(self):
         return convert_percentage(self.price_percent_change)
+
+    def price_percent_change_from(self, field: str):
+        return convert_percentage(self.price_percent_changes.get(field))
 
 
 class RelationshipItem(ApiModel):
@@ -112,6 +116,11 @@ class PoolData(ApiModel):
 class TokenPool:
     pool_name: str
     price: float
+    price_change_5m: float
+    price_change_15m: float
+    price_change_30m: float
+    price_change_1h: float
+    price_change_6h: float
     price_change_24h: float
 
 
@@ -124,5 +133,10 @@ class Pool(ApiModel):
         return TokenPool(
             pool_name=attr.name,
             price=attr.price_in_usd,
-            price_change_24h=attr.price_percent_change_value()
+            price_change_5m=attr.price_percent_change_from(field='last_5m'),
+            price_change_15m=attr.price_percent_change_from(field='last_15m'),
+            price_change_30m=attr.price_percent_change_from(field='last_30m'),
+            price_change_1h=attr.price_percent_change_from(field='last_1h'),
+            price_change_6h=attr.price_percent_change_from(field='last_6h'),
+            price_change_24h=attr.price_percent_change_value
         )

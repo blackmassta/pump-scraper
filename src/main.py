@@ -1,12 +1,10 @@
 # Apify SDK - A toolkit for building Apify Actors. Read more at:
 # https://docs.apify.com/sdk/python
-import json
 from typing import List
 
 from apify import Actor
 
 from src.pump_scraper import PumpScraper, PumpScraperToken
-from src.utils.api import format_response
 from src.utils.condition import Condition, OperatorEnum, ConditionConstant
 
 
