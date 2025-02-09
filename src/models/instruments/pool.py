@@ -9,8 +9,8 @@ from src.utils.scripts import convert_percentage
 
 
 class TokenReserves(ApiModel):
-    reserves: float
-    reserves_in_usd: float
+    reserves: Optional[float]
+    reserves_in_usd: Optional[float]
 
 
 class TokenValueData(ApiModel):
@@ -30,9 +30,9 @@ class HistoricalDataEntry(ApiModel):
 
 
 class SentimentVotes(ApiModel):
-    total: int
-    up_percentage: float
-    down_percentage: float
+    total: Optional[int]
+    up_percentage: Optional[float]
+    down_percentage: Optional[float]
 
 
 class GTScoreDetails(ApiModel):
@@ -90,8 +90,8 @@ class Attributes(ApiModel):
 
 
 class RelationshipItem(ApiModel):
-    id: str
-    type: str
+    id: Optional[str]
+    type: Optional[str]
 
 
 class Relationships(ApiModel):
