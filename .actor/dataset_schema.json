@@ -1,7 +1,6 @@
 {
   "actorSpecification": 1,
   "fields": {},
-  "version": "1.0.0",
   "views": {
     "overview": {
       "title": "Overview",
