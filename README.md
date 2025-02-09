@@ -1,80 +1,47 @@
-## Scrape single-page in Python template
+# Pump.fun Token Scraper
 
-A template for [web scraping](https://apify.com/web-scraping) data from a single web page in Python. The URL of the web page is passed in via input, which is defined by the [input schema](https://docs.apify.com/platform/actors/development/input-schema). The template uses the [HTTPX](https://www.python-httpx.org) to get the HTML of the page and the [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) to parse the data from it. The data are then stored in a [dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets) where you can easily access them.
+![Pump Fun Logo](https://pump.fun/_next/image?url=%2Flogo.png&w=32&q=75)
 
-The scraped data in this template are page headings but you can easily edit the code to scrape whatever you want from the page.
+This tool extracts in-depth data about cryptocurrency tokens from Pump.fun, a platform dedicated to Solana-based assets.
+It provides valuable insights into tokens, including their market caps, trading patterns, social media links, and more.
 
-## Included features
+## Key Features
+- Scrapes information for 1,000 tokens in a single operation.
+- Includes price information from Pool
+- Extensive filtering to save you money on responses:
+  - **Sort By**: Last Trade, Creation Time, Last Reply, or Market Cap
+  - **Sort Order**: Ascending or Descending
+  - **NSFW Content**: Option to include or exclude
+  - **Market Cap**: Option to load only coins above certain market cap
+  - **Is Graduated**: Option to load only coins that are complete and are in raydium.
+  - And more...
+- All token details returned automatically from pump.fun are returned
+  - **Basic Data**: Token name, symbol, and mint address
+  - **Market Data**: Market cap, reserves, and trading figures
+  - **Social Media**: Links to Twitter, Telegram, and website
+  - **Full Metadata**: Descriptions, images, and additional details
+  - **Price Info**: For tokens that are graduated, you can get the price information!!!
 
-- **[Apify SDK](https://docs.apify.com/sdk/python/)** for Python - a toolkit for building Apify [Actors](https://apify.com/actors) and scrapers in Python
-- **[Input schema](https://docs.apify.com/platform/actors/development/input-schema)** - define and easily validate a schema for your Actor's input
-- **[Request queue](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-request-queues)** - queues into which you can put the URLs you want to scrape
-- **[Dataset](https://docs.apify.com/sdk/python/docs/concepts/storages#working-with-datasets)** - store structured data where each object stored has the same attributes
-- **[HTTPX](https://www.python-httpx.org)** - library for making asynchronous HTTP requests in Python
-- **[Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)** - library for pulling data out of HTML and XML files
-
-## How it works
-
-1. `Actor.get_input()` gets the input where the page URL is defined
-2. `httpx.AsyncClient().get(url)` fetches the page
-3. `BeautifulSoup(response.content, 'lxml')` loads the page data and enables parsing the headings
-4. This parses the headings from the page and here you can edit the code to parse whatever you need from the page
-    ```python
-    for heading in soup.find_all(["h1", "h2", "h3", "h4", "h5", "h6"]):
-    ```
-5. `Actor.push_data(headings)` stores the headings in the dataset
-
-## Resources
-
-- [BeautifulSoup Scraper](https://apify.com/apify/beautifulsoup-scraper)
-- [Python tutorials in Academy](https://docs.apify.com/academy/python)
-- [Web scraping with Beautiful Soup and Requests](https://blog.apify.com/web-scraping-with-beautiful-soup/)
-- [Beautiful Soup vs. Scrapy for web scraping](https://blog.apify.com/beautiful-soup-vs-scrapy-web-scraping/)
-- [Integration with Make, GitHub, Zapier, Google Drive, and other apps](https://apify.com/integrations)
-- [Video guide on getting scraped data using Apify API](https://www.youtube.com/watch?v=ViYYDHSBAKM)
-- A short guide on how to build web scrapers using code templates:
-
-[web scraper template](https://www.youtube.com/watch?v=u-i-Korzf8w)
+## Key Use Cases
+- **Market Intelligence**: Analyze token performance, investor sentiment, and broader market trends.  
+- **Emerging Token Discovery**: Spot new tokens early by tracking creation timestamps and initial trading activity.  
+- **Data-Driven Trading**: Leverage historical market data to refine and backtest trading strategies.  
+- **Valuation Monitoring**: Track market capitalization shifts to uncover promising projects and investment opportunities.  
+- **Social Sentiment Analysis**: Assess community engagement by analyzing reply counts, discussions, and platform interactions.  
+- **Project Verification**: Conduct due diligence with in-depth token metadata and real-time project updates.  
+- **Competitive Benchmarking**: Compare token performance and market positioning against competitors.  
+- **Community Engagement Insights**: Measure and interpret social activity across multiple channels to gauge adoption and interest.  
 
 
-## Getting started
+## Input Configuration
+- **sort (String)**: Choose how to sort the results by: `last_trade_timestamp`, `created_timestamp`, `last_reply`, or `market_cap` (default: `created_timestamp`).
+- **order (String)**: Set the sorting order: `ASC` or `DESC` (default: `DESC`).
+- **includeNsfw (Boolean)**: Decide if NSFW tokens should be included (default: `false`).
 
-For complete information [see this article](https://docs.apify.com/platform/actors/development#build-actor-locally). To run the actor use the following command:
-
-```bash
-apify run
-```
-
-## Deploy to Apify
-
-### Connect Git repository to Apify
-
-If you've created a Git repository for the project, you can easily connect to Apify:
-
-1. Go to [Actor creation page](https://console.apify.com/actors/new)
-2. Click on **Link Git Repository** button
-
-### Push project on your local machine to Apify
-
-You can also deploy the project on your local machine to Apify without the need for the Git repository.
-
-1. Log in to Apify. You will need to provide your [Apify API Token](https://console.apify.com/account/integrations) to complete this action.
-
-    ```bash
-    apify login
-    ```
-
-2. Deploy your Actor. This command will deploy and build the Actor on the Apify Platform. You can find your newly created Actor under [Actors -> My Actors](https://console.apify.com/actors?tab=my).
-
-    ```bash
-    apify push
-    ```
-
-## Documentation reference
-
-To learn more about Apify and Actors, take a look at the following resources:
-
-- [Apify SDK for JavaScript documentation](https://docs.apify.com/sdk/js)
-- [Apify SDK for Python documentation](https://docs.apify.com/sdk/python)
-- [Apify Platform documentation](https://docs.apify.com/platform)
-- [Join our developer community on Discord](https://discord.com/invite/jyEM2PRvMU)
+### Example Input
+```json
+{
+  "order_by": "created_timestamp",
+  "order_by_direction": "ASC",
+  "is_nsfw": true
+}
