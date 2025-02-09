@@ -51,26 +51,26 @@ class HighLowPriceData(ApiModel):
 
 
 class Attributes(ApiModel):
-    address: str
-    name: str
-    fully_diluted_valuation: float
-    base_token_id: str
-    price_in_usd: float
-    price_in_target_token: float
-    reserve_in_usd: float
-    reserve_threshold_met: bool
-    from_volume_in_usd: float
-    to_volume_in_usd: float
-    api_address: str
+    address: Optional[str]
+    name: Optional[str]
+    fully_diluted_valuation: Optional[float]
+    base_token_id: Optional[str]
+    price_in_usd: Optional[float]
+    price_in_target_token: Optional[float]
+    reserve_in_usd: Optional[float]
+    reserve_threshold_met: Optional[bool]
+    from_volume_in_usd: Optional[float]
+    to_volume_in_usd: Optional[float]
+    api_address: Optional[str]
     pool_fee: Optional[float] = None
     token_weightages: Optional[dict] = None
     token_reserves: Dict[str, TokenReserves]
     token_value_data: Dict[str, TokenValueData]
     balancer_pool_id: Optional[str] = None
-    swap_count_24h: int
-    swap_url: str
+    swap_count_24h: Optional[int]
+    swap_url: Optional[str]
     sentiment_votes: SentimentVotes
-    price_percent_change: str
+    price_percent_change: Optional[str]
     price_percent_changes: Dict[str, str]
     historical_data: Dict[str, HistoricalDataEntry]
     locked_liquidity: Optional[float] = None
