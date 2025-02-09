@@ -41,6 +41,11 @@
           "profile_image",
           "pool.pool_name",
           "pool.price",
+          "pool.price_change_5m",
+          "pool.price_change_15m",
+          "pool.price_change_30m",
+          "pool.price_change_1h",
+          "pool.price_change_6h",
           "pool.price_change_24h",
           "scraped_date"
         ]
@@ -182,6 +187,26 @@
           },
           "pool.price": {
               "label": "Price",
+              "format": "number"
+          },
+          "pool.price_change_5m": {
+              "label": "5m Price Change (%)",
+              "format": "number"
+          },
+          "pool.price_change_15m": {
+              "label": "15m Price Change (%)",
+              "format": "number"
+          },
+          "pool.price_change_30m": {
+              "label": "30m Price Change (%)",
+              "format": "number"
+          },
+          "pool.price_change_1h": {
+              "label": "1h Price Change (%)",
+              "format": "number"
+          },
+          "pool.price_change_6h": {
+              "label": "6h Price Change (%)",
               "format": "number"
           },
           "pool.price_change_24h": {
