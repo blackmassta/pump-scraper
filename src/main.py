@@ -5,7 +5,7 @@ from typing import List
 
 from apify import Actor
 
-from src.pump_scraper import PumpScraper
+from src.pump_scraper import PumpScraper, PumpScraperToken
 from src.utils.api import format_response
 from src.utils.condition import Condition, OperatorEnum, ConditionConstant
 
@@ -19,6 +19,8 @@ def get_transforms(is_mkt_cap_usd: bool = False):
         "order_by": "sort",
         "order_by_direction": "order",
         "is_nsfw": "includeNsfw",
+        # custom
+        "include_pricing": None,
         # applied with conditions
         "is_graduated": "complete",
         "has_king_of_the_hill": "king_of_the_hill_timestamp",
@@ -100,15 +102,16 @@ async def main() -> None:
         client = PumpScraper(logger=Actor.log)
         # Retrieve the input object for the Actor. The structure of input is defined in input_schema.json.
         params = await build_params()
-        conditions = await build_filters(exclude_fields=client.pump_args)
+        conditions = await build_filters(exclude_fields=client.pump_args.union(client.price_args))
         # Fetch the HTML content of the page, following redirects if necessary.
         Actor.log.info(f'Sending a request with params {params}')
         results = await client.get_results(**params)
         if results:
             Actor.log.debug(f"Filtering results by: {conditions.to_sql(results[0])}")
-            filtered = list(filter(conditions.evaluate, results))
-            Actor.log.debug(f"Filtered results {filtered}")
+            filtered: List[PumpScraperToken] = list(filter(conditions.evaluate, results))
+            Actor.log.info(f"Filtered results ({type(filtered)}) {len(filtered)} - {filtered[0] if filtered else None}")
+            Actor.log.debug(f"Filtered results ({type(filtered)}) {filtered}")
             # Save the extracted headings to the dataset, which is a table-like storage.
-            await Actor.push_data(filtered)
+            await Actor.push_data([f.model_dump() for f in filtered])
         else:
-            await Actor.push_data(results)
+            await Actor.push_data([r.model_dump() for r in results])

@@ -122,3 +122,14 @@ def retry(exception_to_check, tries=3, delay=2, backoff=2):
         return wrapper
 
     return decorator
+
+
+def str_to_bool(value):
+    if isinstance(value, bool):
+        return value
+    if value.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif value.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise Exception(f"Boolean value expected, got {value}")

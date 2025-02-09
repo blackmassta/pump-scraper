@@ -29,15 +29,23 @@
             "dateType": "relative",
             "pattern": "^(\\d+)\\s*(day|hour|minute|second)s?$"
         },
+        "include_pricing": {
+            "title": "Include Pool Pricing",
+            "type": "boolean",
+            "description": "Indicates whether pool pricing should be included (NOTE: this will make the calls slower)",
+            "editor": "checkbox",
+            "default": false,
+            "nullable": true,
+            "sectionCaption": "Flags",
+            "sectionDescription": "Flags based on item property"
+        },
         "is_graduated": {
             "title": "Is Graduated",
             "type": "boolean",
             "description": "Indicates only completed or graduated coins should be scraped (only graduated coins have an associated raydium pool)",
             "editor": "checkbox",
             "default": false,
-            "nullable": true,
-            "sectionCaption": "Flags",
-            "sectionDescription": "Flags based on item property"
+            "nullable": true
         },
         "is_nsfw": {
             "title": "Is NSFW",

@@ -1,4 +1,3 @@
-from dataclasses import asdict
 from datetime import datetime
 from logging import Logger
 from typing import List, Union, Optional
@@ -10,7 +9,7 @@ from src.api.pump import PumpApi
 from src.models.instruments.pool import Pool, TokenPool
 from src.models.instruments.pump_token import PumpToken
 from src.models.integration.api import ApiError
-from src.utils.scripts import retry, hours_ago
+from src.utils.scripts import retry, hours_ago, str_to_bool, exception_swallow
 from src.utils.api import exception_handler
 
 
@@ -24,6 +23,7 @@ class PumpScraper:
         self.logger = logger.getChild(__name__)
         self.pump_api = PumpApi(logger=logger)
         self.pool_api = GeckoTerminal(logger=logger)
+        self.price_args = {"include_pricing"}
         self.pump_args = {"term", "offset", "limit", "sort", "order", "includeNsfw"}
 
     @exception_handler
@@ -31,9 +31,10 @@ class PumpScraper:
         results: List[PumpScraperToken] = []
 
         coin_args = {k: v for k, v in kwargs.items() if k in self.pump_args}
+        include_pricing = str_to_bool(kwargs.get("include_pricing", "false"))
         coins = await self.get_coins(**coin_args)
         for coin in coins:
-            if not coin.raydium_pool:
+            if not coin.raydium_pool or not include_pricing:
                 self.logger.debug(f"{coin.symbol} has no pool, skipping")
                 results.append(PumpScraperToken(**coin.model_dump()))
                 continue
@@ -54,7 +55,7 @@ class PumpScraper:
 
         return results
 
-    @retry(Exception, tries=3, delay=2, backoff=2)
+    @retry(Exception, tries=3, delay=1, backoff=2)
     async def get_coins(
             self,
             term: str = None,
@@ -67,6 +68,7 @@ class PumpScraper:
         else:
             return await self.pump_api.get_tokens(offset=offset, limit=limit, **kwargs)
 
-    @retry(Exception, tries=3, delay=2, backoff=2)
+    @exception_swallow
+    @retry(Exception, tries=2, delay=3, backoff=2)
     async def get_pool(self, pool_id: str) -> Union[List[Pool], ApiError]:
         return await self.pool_api.get_pool(pool_id=pool_id)
