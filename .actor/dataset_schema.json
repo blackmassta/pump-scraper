@@ -1,0 +1,208 @@
+{
+  "actorSpecification": 1,
+  "name": "pump-scraper",
+  "title": "Pump.fun Scraper",
+  "version": "1.0.0",
+  "storages": {
+    "dataset": {
+      "actorSpecification": 1,
+      "fields": {},
+      "views": {
+        "overview": {
+          "title": "Overview",
+          "transformation": {
+            "flatten": ["pool"],
+            "fields": [
+              "mint",
+              "name",
+              "symbol",
+              "description",
+              "creator",
+              "market_cap",
+              "usd_market_cap",
+              "created_timestamp",
+              "image_uri",
+              "metadata_uri",
+              "twitter",
+              "telegram",
+              "bonding_curve",
+              "associated_bonding_curve",
+              "raydium_pool",
+              "complete",
+              "virtual_sol_reserves",
+              "virtual_token_reserves",
+              "hidden",
+              "total_supply",
+              "website",
+              "show_name",
+              "last_trade_timestamp",
+              "king_of_the_hill_timestamp",
+              "reply_count",
+              "last_reply",
+              "nsfw",
+              "market_id",
+              "inverted",
+              "is_currently_live",
+              "username",
+              "profile_image",
+              "pool.pool_name",
+              "pool.price",
+              "pool.price_change_24h",
+              "scraped_date"
+            ]
+          },
+          "display": {
+            "component": "table",
+            "properties": {
+              "mint": {
+                "label": "Mint Address",
+                "format": "text"
+              },
+              "name": {
+                "label": "Name",
+                "format": "text"
+              },
+              "symbol": {
+                "label": "Symbol",
+                "format": "text"
+              },
+              "description": {
+                "label": "Description",
+                "format": "text"
+              },
+              "creator": {
+                "label": "Creator",
+                "format": "text"
+              },
+              "market_cap": {
+                "label": "Market Cap",
+                "format": "number"
+              },
+              "usd_market_cap": {
+                "label": "Market Cap (USD)",
+                "format": "number"
+              },
+              "created_timestamp": {
+                "label": "Created At",
+                "format": "date"
+              },
+              "image_uri": {
+                "label": "Image",
+                "format": "image"
+              },
+              "metadata_uri": {
+                "label": "Metadata",
+                "format": "link"
+              },
+              "twitter": {
+                "label": "Twitter",
+                "format": "text"
+              },
+              "telegram": {
+                "label": "Telegram",
+                "format": "text"
+              },
+              "bonding_curve": {
+                "label": "Bonding Curve",
+                "format": "text"
+              },
+              "associated_bonding_curve": {
+                "label": "Associated Bonding Curve",
+                "format": "text"
+              },
+              "raydium_pool": {
+                "label": "Raydium Pool",
+                "format": "text"
+              },
+              "complete": {
+                "label": "Complete",
+                "format": "boolean"
+              },
+              "virtual_sol_reserves": {
+                "label": "Virtual SOL Reserves",
+                "format": "number"
+              },
+              "virtual_token_reserves": {
+                "label": "Virtual Token Reserves",
+                "format": "number"
+              },
+              "hidden": {
+                "label": "Hidden",
+                "format": "boolean"
+              },
+              "total_supply": {
+                "label": "Total Supply",
+                "format": "number"
+              },
+              "website": {
+                "label": "Website",
+                "format": "link"
+              },
+              "show_name": {
+                "label": "Show Name",
+                "format": "boolean"
+              },
+              "last_trade_timestamp": {
+                "label": "Last Trade At",
+                "format": "date"
+              },
+              "king_of_the_hill_timestamp": {
+                "label": "King of the Hill At",
+                "format": "date"
+              },
+              "reply_count": {
+                "label": "Reply Count",
+                "format": "number"
+              },
+              "last_reply": {
+                "label": "Last Reply At",
+                "format": "date"
+              },
+              "nsfw": {
+                "label": "NSFW",
+                "format": "boolean"
+              },
+              "market_id": {
+                "label": "Market ID",
+                "format": "text"
+              },
+              "inverted": {
+                "label": "Inverted",
+                "format": "boolean"
+              },
+              "is_currently_live": {
+                "label": "Currently Live",
+                "format": "boolean"
+              },
+              "username": {
+                "label": "Username",
+                "format": "text"
+              },
+              "profile_image": {
+                "label": "Profile Image",
+                "format": "image"
+              },
+              "pool.pool_name": {
+                  "label": "Pool Name",
+                  "format": "text"
+              },
+              "pool.price": {
+                  "label": "Price",
+                  "format": "number"
+              },
+              "pool.price_change_24h": {
+                  "label": "24h Price Change (%)",
+                  "format": "number"
+              },
+              "scraped_date": {
+                "label": "Scraped At",
+                "format": "date"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
