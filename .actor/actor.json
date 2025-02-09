@@ -2,11 +2,11 @@
 	"actorSpecification": 1,
 	"name": "pump-scraper",
 	"title": "The best scraper for pump.fun API",
-	"description": "Scrape data the pump.fun API and filter based on criteria",
+	"description": "Scrape pool and price data with the pump.fun API and filter based on criteria",
 	"version": "0.0",
 	"buildTag": "latest",
 	"meta": {
-		"templateId": "python-start"
+		"templateId": "python-playwright"
 	},
 	"input": "./input_schema.json",
 	"dockerfile": "./Dockerfile"

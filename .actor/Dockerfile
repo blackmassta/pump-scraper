@@ -1,7 +1,7 @@
 # First, specify the base Docker image.
 # You can see the Docker images from Apify at https://hub.docker.com/r/apify/.
 # You can also use any other image from Docker Hub.
-FROM apify/actor-python:3.12
+FROM apify/actor-python-playwright:3.12
 
 # Second, copy just requirements.txt into the Actor image,
 # since it should be the only file that affects the dependency install in the next step,
@@ -20,13 +20,14 @@ RUN echo "Python version:" \
  && echo "All installed Python packages:" \
  && pip freeze
 
+ # Install Playwright and its dependencies
+RUN playwright install-deps && \
+    playwright install
+
 # Next, copy the remaining files and directories with the source code.
 # Since we do this after installing the dependencies, quick build will be really fast
 # for most source file changes.
 COPY . ./
-
-# Install playwright
-RUN playwright install
 
 # Use compileall to ensure the runnability of the Actor Python code.
 RUN python3 -m compileall -q .
