@@ -14,20 +14,20 @@
             "sectionDescription": "Filter based on item property"
         },
         "created_timestamp": {
-            "title": "Created date",
+            "title": "Created date (days ago)",
             "type": "string",
             "description": "Created date relative format: {number} {unit}",
             "editor": "datepicker",
-            "dateType": "relative",
-            "pattern": "^(\\d+)\\s*(hour|minute|second)s?$"
+            "dateType": "absoluteOrRelative",
+            "pattern": "^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])(T[0-2]\\d:[0-5]\\d(:[0-5]\\d)?(\\.\\d+)?Z?)?$|^(\\d+)\\s*(minute|hour|day)s?$"
         },
         "last_trade_timestamp": {
-            "title": "Last traded date",
+            "title": "Last traded date (days ago)",
             "type": "string",
             "description": "Last traded date relative format: {number} {unit}",
             "editor": "datepicker",
-            "dateType": "relative",
-            "pattern": "^(\\d+)\\s*(day|hour|minute|second)s?$"
+            "dateType": "absoluteOrRelative",
+            "pattern": "^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])(T[0-2]\\d:[0-5]\\d(:[0-5]\\d)?(\\.\\d+)?Z?)?$|^(\\d+)\\s*(minute|hour|day)s?$"
         },
         "include_pricing": {
             "title": "Include Pool Pricing",
