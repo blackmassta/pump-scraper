@@ -72,17 +72,17 @@
             "sectionDescription": "Filter based on Market Cap values"
         },
         "min_mkt_cap": {
-            "title": "Max Market Cap",
+            "title": "Min Market Cap",
             "type": "integer",
-            "description": "The maximum market cap to scrape",
+            "description": "The minimum market cap to scrape",
             "editor": "number",
             "minimum": 0,
             "nullable": true
         },
         "max_mkt_cap": {
-            "title": "Min Market Cap",
+            "title": "Max Market Cap",
             "type": "integer",
-            "description": "The minimum market cap to scrape",
+            "description": "The maximum market cap to scrape",
             "editor": "number",
             "minimum": 0,
             "nullable": true
