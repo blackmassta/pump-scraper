@@ -46,6 +46,8 @@ It provides valuable insights into tokens, including their market caps, trading 
   "is_graduated": false,
   "is_mkt_cap_usd": false,
   "is_nsfw": true,
+  "min_created_timestamp": "1 hour",
+  "min_last_trade_timestamp": "10 minutes",
   "limit": 1000,
   "offset": 0,
   "order_by": "created_timestamp",

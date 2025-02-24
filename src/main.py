@@ -21,6 +21,8 @@ def get_transforms(is_mkt_cap_usd: bool = False):
         "include_pricing": None,
         # applied with conditions
         "is_graduated": "complete",
+        "min_created_timestamp": "created_timestamp",
+        "min_last_trade_timestamp": "last_trade_timestamp",
         "has_king_of_the_hill": "king_of_the_hill_timestamp",
         "min_mkt_cap": "usd_market_cap" if is_mkt_cap_usd else "market_cap",
         "max_mkt_cap": "usd_market_cap" if is_mkt_cap_usd else "market_cap"
