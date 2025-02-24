@@ -18,7 +18,7 @@
             "type": "string",
             "description": "Created date relative format: {number} {unit}",
             "editor": "datepicker",
-            "dateType": "absoluteOrRelative",
+            "dateType": "relative",
             "pattern": "^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])(T[0-2]\\d:[0-5]\\d(:[0-5]\\d)?(\\.\\d+)?Z?)?$|^(\\d+)\\s*(minute|hour|day)s?$"
         },
         "last_trade_timestamp": {
@@ -26,7 +26,7 @@
             "type": "string",
             "description": "Last traded date relative format: {number} {unit}",
             "editor": "datepicker",
-            "dateType": "absoluteOrRelative",
+            "dateType": "relative",
             "pattern": "^(\\d{4})-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])(T[0-2]\\d:[0-5]\\d(:[0-5]\\d)?(\\.\\d+)?Z?)?$|^(\\d+)\\s*(minute|hour|day)s?$"
         },
         "include_pricing": {
