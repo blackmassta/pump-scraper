@@ -1,3 +1,4 @@
+import re
 import sys
 import time
 from functools import wraps
@@ -133,3 +134,51 @@ def str_to_bool(value):
         return False
     else:
         raise Exception(f"Boolean value expected, got {value}")
+
+
+def parse_date(input_str: str) -> datetime:
+    if not input_str.strip():
+        return datetime(1990, 1, 1)
+
+    # Try parsing as timestamp
+    try:
+        timestamp = float(input_str)
+        return datetime.fromtimestamp(timestamp, pytz.timezone('UTC'))
+    except ValueError:
+        pass
+
+    # Try parsing relative date
+    match = re.match(r"(\d+)\s*(second|minute|hour|day|week|month|year)s?", input_str, re.IGNORECASE)
+    if match:
+        value, unit = int(match.group(1)), match.group(2).lower()
+        now = hours_ago(0)
+
+        if unit == "second":
+            delta = timedelta(seconds=value)
+        elif unit == "minute":
+            delta = timedelta(minutes=value)
+        elif unit == "hour":
+            delta = timedelta(hours=value)
+        elif unit == "day":
+            delta = timedelta(days=value)
+        elif unit == "week":
+            delta = timedelta(weeks=value)
+        elif unit == "month":
+            delta = timedelta(days=30 * value)  # Approximate month as 30 days
+        elif unit == "year":
+            delta = timedelta(days=365 * value)  # Approximate year as 365 days
+        else:
+            raise ValueError("Unsupported time unit")
+
+        return now - delta
+
+    raise ValueError("Invalid date format")
+
+
+if __name__ == "__main__":
+    # Example usage
+    print(parse_date("1 hour"))       # 1 hour ago
+    print(parse_date("2 days"))       # 2 days ago
+    print(parse_date("1672531199"))   # Converts timestamp to UTC
+    print(parse_date(""))             # Returns "1990-01-01T00:00:00Z"
+    print(parse_date("invalid"))      # Raises ValueError

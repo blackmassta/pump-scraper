@@ -6,6 +6,7 @@ from apify import Actor
 
 from src.pump_scraper import PumpScraper, PumpScraperToken
 from src.utils.condition import Condition, OperatorEnum, ConditionConstant
+from src.utils.scripts import parse_date
 
 
 def get_transforms(is_mkt_cap_usd: bool = False):
@@ -81,6 +82,11 @@ async def build_filters(exclude_fields: List[str] = None):
             value = None if value == "both" else bool(value)
         else:
             operator = OperatorEnum.EQ
+
+        if "_timestamp" in key:
+            initial_value = value
+            value = parse_date(value)
+            Actor.log.debug(f"Converted {initial_value} to datetime: {value}")
 
         if isinstance(value, bool) and value is False:
             Actor.log.debug(f"Skipping {field} filter")
